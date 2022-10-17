@@ -1,0 +1,76 @@
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const fetch = require('node-fetch');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('get-user')
+		.setDescription('rec room')
+		.addSubcommand(subcommand =>
+			subcommand
+			.setName("id")
+			.setDescription("Get a Rec Room user from their ID")
+			.addStringOption(string =>
+				string.setName("id")
+					.setRequired(true)
+					.setDescription("the ID of the user")))
+		.addSubcommand(subcommand =>
+			subcommand
+			.setName("username")
+			.setDescription("Get a Rec Room user from their username")
+			.addStringOption(string =>
+				string.setName("username")
+					.setRequired(true)
+					.setDescription("The username of the user"))),
+	async execute(interaction) {
+		const cmd = interaction.options.getSubcommand()
+		await interaction.deferReply()
+
+		let id
+
+		if(cmd == "id"){
+			id = `/${interaction.options.getString("id")}`
+		} else if(cmd == "username"){
+			id = `?username=${interaction.options.getString("username")}`
+		}
+
+		//const id = interaction.options.getString("id");
+		//if(Number(id) < 1){interaction.editReply("❌ **User ID must be greater than 0!**"); return;}
+
+		try {
+			const response = await fetch(`https://accounts.rec.net/account${id}`)
+			const json = await response.json();
+
+			if (json.errors) {
+				interaction.editReply("❌ **User ID must be greater than 0!**"); 
+				return;
+			}
+
+			const response2 = await fetch(`https://accounts.rec.net/account/${json.accountId}/bio`)
+			const jsonbio = await response2.json();
+
+			const embed = new EmbedBuilder()
+				.setTitle(`${json.displayName} (@${json.username}) - ${json.accountId}`)
+				.setURL(`https://rec.net/user/${json.username}`)
+				.setThumbnail(`https://img.rec.net/${json.profileImage}?cropSquare=true&width=192&height=192`)
+				.setDescription(jsonbio.bio)
+				.addFields(
+					{ name: 'Account ID', value: `${json.accountId}`, inline: true },
+					{ name: 'Username', value: `${json.username}`, inline: true },
+					{ name: 'Display Name', value: `${json.displayName}`, inline: true },
+					//{ name: '\u200B', value: '\u200B' },
+					{ name: 'Profile Image', value: `[here](https://img.rec.net/${json.profileImage})`, inline: true },
+					{ name: 'Banner Image', value: `[here](https://img.rec.net/${json.bannerImage})`, inline: true },
+					//{ name: '\u200B', value: '\u200B' },
+					{ name: 'Junior?', value: `${json.isJunior}`, inline: true },
+					{ name: 'Platforms', value: `${json.platforms}`, inline: true },
+					{ name: 'Pronouns', value: `${json.personalPronouns}`, inline: true },
+					{ name: 'Identity Flags', value: `${json.identityFlags}`, inline: true },
+				)
+			interaction.editReply({ embeds: [embed] });
+		} catch(e) {
+			console.log(e)
+			interaction.editReply("❌ **There was an error with your request.\n\nEither the requested user is invalid, or there's an internal issue.**"); 
+			return;
+		}
+	},
+};
