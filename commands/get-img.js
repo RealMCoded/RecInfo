@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fetch = require('node-fetch');
+const { getNameFromID } = require("../util.js")
 
 //TODO: IMAGE ID GETTING
 
@@ -51,13 +52,13 @@ module.exports = {
 					const response = await fetch(`https://api.rec.net/api/images/v4/player/${interaction.options.getString("id")}`)
 					json = await response.json();
 					json = json[0]
-					header = `Newest image created by ${interaction.options.getString("id")}`
+					header = `Newest image created by ${await getNameFromID(interaction.options.getString("id"))}`
 				} break;
 				case "of-player": {
 					const response = await fetch(`https://api.rec.net/api/images/v3/feed/player/${interaction.options.getString("id")}`)
 					json = await response.json();
 					json = json[0]
-					header = `Newest image containing ${interaction.options.getString("id")}`
+					header = `Newest image containing ${await getNameFromID(interaction.options.getString("id"))}`
 				} break;
 			}
 
@@ -67,7 +68,7 @@ module.exports = {
 				.setImage(`https://img.rec.net/${json.ImageName}`)
 				.setDescription(`*\"${json.Description ?? "( no description provided )"}\"*`)
 				.addFields(
-					{ name: 'Taken by (Player ID)', value: `${json.PlayerId}`, inline: true },
+					{ name: 'Taken by', value: `${await getNameFromID(json.PlayerId)}`, inline: true },
 					{ name: 'Room ID', value: `${json.RoomId}`, inline: true },
 					{ name: 'Cheers', value: `${json.CheerCount}`, inline: true },
 					{ name: 'Comments', value: `${json.CommentCount}`, inline: true },

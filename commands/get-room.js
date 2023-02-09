@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fetch = require('node-fetch');
+const { getNameFromID } = require("../util.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -53,7 +54,7 @@ module.exports = {
 					{ name: 'Room ID (deprecated)', value: `${json.RoomId}`, inline: true },
 					{ name: 'Doom Room?', value: `${json.IsDorm}`, inline: true },
 					{ name: 'Max Players', value: `${json.MaxPlayers}`, inline: true },
-					{ name: 'Creator (ID)', value: `${json.CreatorAccountId}`, inline: true },
+					{ name: 'Room Owner', value: `${await getNameFromID(json.CreatorAccountId)}`, inline: true },
 				)
 			if(cmd == "id"){interaction.editReply({ content:"⚠️ **Room IDs are no longer supported by the Rec Room API.**", embeds: [embed] });} else {interaction.editReply({ embeds: [embed] });}
 		} catch(e) {
