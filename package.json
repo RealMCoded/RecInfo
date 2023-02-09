@@ -1,6 +1,30 @@
 {
+  "name": "recinfo",
+  "description": "A discord bot written in discord.js to interface with RecNet.",
+  "version": "0.1.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "deploy": "node deploy.js",
+    "run": "",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RealMCoded/RecInfo.git"
+  },
+  "keywords": [
+    "recroom",
+    "discord"
+  ],
+  "author": "stuartt_mcoded",
+  "license": "GPL-3.0",
   "dependencies": {
     "discord.js": "^14.6.0",
     "node-fetch": "^2.6.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/RealMCoded/RecInfo/issues"
+  },
+  "homepage": "https://github.com/RealMCoded/RecInfo#readme"
 }
