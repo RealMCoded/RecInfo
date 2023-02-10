@@ -33,9 +33,6 @@ module.exports = {
 			id = `?username=${interaction.options.getString("username")}`
 		}
 
-		//const id = interaction.options.getString("id");
-		//if(Number(id) < 1){interaction.editReply("❌ **User ID must be greater than 0!**"); return;}
-
 		try {
 			const response = await fetch(`https://accounts.rec.net/account${id}`)
 			const json = await response.json();

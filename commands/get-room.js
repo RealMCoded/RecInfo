@@ -38,12 +38,9 @@ module.exports = {
 			const response = await fetch(`https://rooms.rec.net/rooms${id}`)
 			const json = await response.json();
 
-			if (json.title) {
-				interaction.editReply("❌ **Invalid room name/id!**"); 
-				return;
-			}
+			if (json.title) return interaction.editReply("❌ **Invalid room name/id!**"); //Error checking
 
-			//https://rooms.rec.net/rooms/1
+			const roomowner = await getNameFromID(json.CreatorAccountId)
 
 			const embed = new EmbedBuilder()
 				.setTitle(`^${json.Name} - ${json.RoomId}`)
@@ -54,7 +51,7 @@ module.exports = {
 					{ name: 'Room ID (deprecated)', value: `${json.RoomId}`, inline: true },
 					{ name: 'Doom Room?', value: `${json.IsDorm}`, inline: true },
 					{ name: 'Max Players', value: `${json.MaxPlayers}`, inline: true },
-					{ name: 'Room Owner', value: `${await getNameFromID(json.CreatorAccountId)}`, inline: true },
+					{ name: 'Room Owner', value: `[${roomowner}](https://rec.net/users/${roomowner})`, inline: true },
 				)
 			if(cmd == "id"){interaction.editReply({ content:"⚠️ **Room IDs are no longer supported by the Rec Room API.**", embeds: [embed] });} else {interaction.editReply({ embeds: [embed] });}
 		} catch(e) {
