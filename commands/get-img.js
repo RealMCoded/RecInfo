@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fetch = require('node-fetch');
-const { getNameFromID } = require("../util.js")
+const { getPlayerNameFromID, getRoomNameFromID } = require("../util.js")
 
 //TODO: IMAGE ID GETTING
 
@@ -46,26 +46,28 @@ module.exports = {
 					const response = await fetch(`https://api.rec.net/api/images/v3/feed/global`)
 					json = await response.json();
 					json = json[0]
-					playerID = json.playerID
+					playerID = json.PlayerId
 					header = "Top image of rec.net"
 				} break;
 				case "by-player": {
 					const response = await fetch(`https://api.rec.net/api/images/v4/player/${interaction.options.getString("id")}`)
 					json = await response.json();
 					json = json[0]
-					playerID = json.playerID
-					header = `Newest image created by ${await getNameFromID(playerID)}`
+					playerID = json.PlayerId
+					console.log(json)
+					header = `Newest image created by ${await getPlayerNameFromID(playerID)}`
 				} break;
 				case "of-player": {
 					const response = await fetch(`https://api.rec.net/api/images/v3/feed/player/${interaction.options.getString("id")}`)
 					json = await response.json();
 					json = json[0]
-					playerID = json.playerID
-					header = `Newest image containing ${await getNameFromID(playerID)}`
+					playerID = json.PlayerId
+					header = `Newest image containing ${await getPlayerNameFromID(playerID)}`
 				} break;
 			}
 
-			let uname = await getNameFromID(json.PlayerId)
+			let uname = await getPlayerNameFromID(playerID)
+			let room = await getRoomNameFromID(json.RoomId)
 
 			const embed = new EmbedBuilder()
 				.setTitle(`${header} - ${json.Id}`)
@@ -74,7 +76,7 @@ module.exports = {
 				.setDescription(`*\"${json.Description ?? "( no description provided )"}\"*`)
 				.addFields(
 					{ name: 'Taken by', value: `[${uname}](https://rec.net/user/${uname})`, inline: true },
-					{ name: 'Room ID', value: `${json.RoomId}`, inline: true },
+					{ name: 'Room', value: `[${room}](https://rec.net/room/${room})`, inline: true },
 					{ name: 'Cheers', value: `${json.CheerCount}`, inline: true },
 					{ name: 'Comments', value: `${json.CommentCount}`, inline: true },
 			)

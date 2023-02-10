@@ -1,6 +1,10 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fetch = require('node-fetch');
-const { getNameFromID } = require("../util.js")
+const { getPlayerNameFromID } = require("../util.js")
+
+/*
+	TODO: Rewrite ALL room GETs to use `https://rooms.rec.net/rooms/bulk?Id={{id}}`
+*/
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -40,7 +44,7 @@ module.exports = {
 
 			if (json.title) return interaction.editReply("❌ **Invalid room name/id!**"); //Error checking
 
-			const roomowner = await getNameFromID(json.CreatorAccountId)
+			const roomowner = await getPlayerNameFromID(json.CreatorAccountId)
 
 			const embed = new EmbedBuilder()
 				.setTitle(`^${json.Name} - ${json.RoomId}`)
