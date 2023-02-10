@@ -6,17 +6,19 @@ A discord bot written in discord.js to interface with RecNet.
 
 ## Features
 
-- Get user info
+- Get user info!
 
-- Get room info [work in progress]
+- Get room info!
 
-- More coming soon!
+- Show images from rec.net!
 
 ## Screenshots
 
 ![](./readme/0.png)
 
 ![](./readme/1.png)
+
+![](./readme/2.png)
 
 ## Building
 
