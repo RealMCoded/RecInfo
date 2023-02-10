@@ -38,7 +38,7 @@ module.exports = {
 		const cmd = interaction.options.getSubcommand()
 		await interaction.deferReply()
 
-		let header, json
+		let header, json, playerID;
 
 		try {
 			switch(cmd) {
@@ -46,21 +46,26 @@ module.exports = {
 					const response = await fetch(`https://api.rec.net/api/images/v3/feed/global`)
 					json = await response.json();
 					json = json[0]
+					playerID = json.playerID
 					header = "Top image of rec.net"
 				} break;
 				case "by-player": {
 					const response = await fetch(`https://api.rec.net/api/images/v4/player/${interaction.options.getString("id")}`)
 					json = await response.json();
 					json = json[0]
-					header = `Newest image created by ${await getNameFromID(interaction.options.getString("id"))}`
+					playerID = json.playerID
+					header = `Newest image created by ${await getNameFromID(playerID)}`
 				} break;
 				case "of-player": {
 					const response = await fetch(`https://api.rec.net/api/images/v3/feed/player/${interaction.options.getString("id")}`)
 					json = await response.json();
 					json = json[0]
-					header = `Newest image containing ${await getNameFromID(interaction.options.getString("id"))}`
+					playerID = json.playerID
+					header = `Newest image containing ${await getNameFromID(playerID)}`
 				} break;
 			}
+
+			let uname = await getNameFromID(json.PlayerId)
 
 			const embed = new EmbedBuilder()
 				.setTitle(`${header} - ${json.Id}`)
@@ -68,7 +73,7 @@ module.exports = {
 				.setImage(`https://img.rec.net/${json.ImageName}`)
 				.setDescription(`*\"${json.Description ?? "( no description provided )"}\"*`)
 				.addFields(
-					{ name: 'Taken by', value: `${await getNameFromID(json.PlayerId)}`, inline: true },
+					{ name: 'Taken by', value: `[${uname}](https://rec.net/user/${uname})`, inline: true },
 					{ name: 'Room ID', value: `${json.RoomId}`, inline: true },
 					{ name: 'Cheers', value: `${json.CheerCount}`, inline: true },
 					{ name: 'Comments', value: `${json.CommentCount}`, inline: true },

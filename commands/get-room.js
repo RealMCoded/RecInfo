@@ -51,7 +51,7 @@ module.exports = {
 					{ name: 'Room ID (deprecated)', value: `${json.RoomId}`, inline: true },
 					{ name: 'Doom Room?', value: `${json.IsDorm}`, inline: true },
 					{ name: 'Max Players', value: `${json.MaxPlayers}`, inline: true },
-					{ name: 'Room Owner', value: `[${roomowner}](https://rec.net/users/${roomowner})`, inline: true },
+					{ name: 'Room Owner', value: `[${roomowner}](https://rec.net/user/${roomowner})`, inline: true },
 				)
 			if(cmd == "id"){interaction.editReply({ content:"⚠️ **Room IDs are no longer supported by the Rec Room API.**", embeds: [embed] });} else {interaction.editReply({ embeds: [embed] });}
 		} catch(e) {
