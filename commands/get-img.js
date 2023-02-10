@@ -54,7 +54,6 @@ module.exports = {
 					json = await response.json();
 					json = json[0]
 					playerID = json.PlayerId
-					console.log(json)
 					header = `Newest image created by ${await getPlayerNameFromID(playerID)}`
 				} break;
 				case "of-player": {
