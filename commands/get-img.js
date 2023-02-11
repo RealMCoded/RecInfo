@@ -68,6 +68,8 @@ module.exports = {
 			let uname = await getPlayerNameFromID(playerID)
 			let room = await getRoomNameFromID(json.RoomId)
 
+			if (room == null) {room = "*(unknown)*"} else {room = `[${room}](https://rec.net/room/${room})`}
+
 			const embed = new EmbedBuilder()
 				.setTitle(`${header} - ${json.Id}`)
 				.setURL(`https://rec.net/image/${json.Id}`)
@@ -75,7 +77,7 @@ module.exports = {
 				.setDescription(`*\"${json.Description ?? "( no description provided )"}\"*`)
 				.addFields(
 					{ name: 'Taken by', value: `[${uname}](https://rec.net/user/${uname})`, inline: true },
-					{ name: 'Room', value: `[${room}](https://rec.net/room/${room})`, inline: true },
+					{ name: 'Room', value: room, inline: true },
 					{ name: 'Cheers', value: `${json.CheerCount}`, inline: true },
 					{ name: 'Comments', value: `${json.CommentCount}`, inline: true },
 			)

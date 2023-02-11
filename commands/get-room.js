@@ -33,31 +33,33 @@ module.exports = {
 		let id
 
 		if(cmd == "id"){
-			id = `/${interaction.options.getString("id")}`
+			id = `?id=${interaction.options.getString("id")}`
 		} else if(cmd == "name"){
 			id = `?name=${interaction.options.getString("name")}`
 		}
 
 		try {
-			const response = await fetch(`https://rooms.rec.net/rooms${id}`)
+			const response = await fetch(`https://rooms.rec.net/rooms/bulk${id}`)
 			const json = await response.json();
 
-			if (json.title) return interaction.editReply("❌ **Invalid room name/id!**"); //Error checking
+			//Error checking
+			if (json.title) return interaction.editReply("❌ **Invalid room name/id!**");
+			if (json.length == 0) return interaction.editReply("❌ **Invalid room name/id!**");
 
-			const roomowner = await getPlayerNameFromID(json.CreatorAccountId)
+			const roomowner = await getPlayerNameFromID(json[0].CreatorAccountId)
 
 			const embed = new EmbedBuilder()
-				.setTitle(`^${json.Name} - ${json.RoomId}`)
-				.setURL(`https://rec.net/room/${json.Name}`)
-				.setImage(`https://img.rec.net/${json.ImageName}`)
-				.setDescription(json.Description)
+				.setTitle(`^${json[0].Name} - ${json[0].RoomId}`)
+				.setURL(`https://rec.net/room/${json[0].Name}`)
+				.setImage(`https://img.rec.net/${json[0].ImageName}`)
+				.setDescription(json[0].Description)
 				.addFields(
-					{ name: 'Room ID (deprecated)', value: `${json.RoomId}`, inline: true },
-					{ name: 'Doom Room?', value: `${json.IsDorm}`, inline: true },
-					{ name: 'Max Players', value: `${json.MaxPlayers}`, inline: true },
+					{ name: 'Room ID', value: `${json[0].RoomId}`, inline: true },
+					{ name: 'Doom Room?', value: `${json[0].IsDorm}`, inline: true },
+					{ name: 'Max Players', value: `${json[0].MaxPlayers}`, inline: true },
 					{ name: 'Room Owner', value: `[${roomowner}](https://rec.net/user/${roomowner})`, inline: true },
 				)
-			if(cmd == "id"){interaction.editReply({ content:"⚠️ **Room IDs are no longer supported by the Rec Room API.**", embeds: [embed] });} else {interaction.editReply({ embeds: [embed] });}
+			interaction.editReply({ embeds: [embed] });
 		} catch(e) {
 			console.log(e)
 			interaction.editReply("❌ **There was an error with your request.\n\nEither the requested room is invalid, or there's an internal issue.**"); 

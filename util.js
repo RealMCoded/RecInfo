@@ -24,15 +24,16 @@ async function getPlayerNameFromID(id) {
 
 async function getRoomNameFromID(id) {
     try{
-        const response = await fetch(`https://rooms.rec.net/rooms/${id}`);
+        const response = await fetch(`https://rooms.rec.net/rooms/bulk?Id=${id}`);
         const json = await response.json();
 
         if (json.title) throw json.title;
+        if (json.length == 0) return null;
 
-        return `^${json.Name}`;
+        return `^${json[0].Name}`;
     } catch(e) {
         console.error(e)
-        return "*(unknown)*";
+        return null;
     }
 }
 
