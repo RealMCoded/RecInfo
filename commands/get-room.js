@@ -2,10 +2,6 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fetch = require('node-fetch');
 const { getPlayerNameFromID } = require("../util.js")
 
-/*
-	TODO: Rewrite ALL room GETs to use `https://rooms.rec.net/rooms/bulk?Id={{id}}`
-*/
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('get-room')
