@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits, ActivityType  } = require('discord.js');
+const { codeBlock } = require('@discordjs/builders');
 const { token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -16,13 +17,11 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
-	console.log('Ready!');
+	console.log(`✅ Signed in as ${client.user.tag}! \n`);
 	client.user.setActivity('Rec Room', { type: ActivityType.Playing });
 });
 
 client.on('interactionCreate', async interaction => {
-	if (!interaction.isChatInputCommand()) return;
-
 	const command = client.commands.get(interaction.commandName);
 
 	if (!command) return;
@@ -30,8 +29,8 @@ client.on('interactionCreate', async interaction => {
 	try {
 		await command.execute(interaction);
 	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		console.error(`❌ uh oh! ${error}`);
+		await interaction.reply({ content: `⚠️ **Something bad happened while executing that command. [Open an issue on GitHub](https://github.com/RealMCoded/RecInfo/issues/new) with the error below.**\n\n${codeBlock(js, error)}`, ephemeral: true });
 	}
 });
 
