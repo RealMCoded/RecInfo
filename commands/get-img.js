@@ -33,7 +33,15 @@ module.exports = {
 			.addStringOption(string =>
 				string.setName("id")
 					.setRequired(true)
-					.setDescription("The players ID"))),
+					.setDescription("The players ID")))
+		.addSubcommand(subcommand =>
+			subcommand
+			.setName("id")
+			.setDescription("Get an image by it's ID")
+			.addStringOption(string =>
+				string.setName("id")
+					.setRequired(true)
+					.setDescription("The image ID"))),
 	async execute(interaction) {
 		const cmd = interaction.options.getSubcommand()
 		await interaction.deferReply()
@@ -62,6 +70,15 @@ module.exports = {
 					json = json[0]
 					playerID = json.PlayerId
 					header = `Newest image containing ${await getPlayerNameFromID(playerID)}`
+				} break;
+				case "id": {
+					const params = new URLSearchParams();
+					params.append('IDs', interaction.options.getString("id"));
+					const response = await fetch(`https://api.rec.net/api/images/v3/bulk`, {method: 'POST', body: params})
+					json = await response.json();
+					json = json[0]
+					playerID = json.PlayerId
+					header = `Image uploaded by ${await getPlayerNameFromID(playerID)}`
 				} break;
 			}
 
