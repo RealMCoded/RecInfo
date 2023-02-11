@@ -55,9 +55,11 @@ module.exports = {
 				.setDescription(json[0].Description)
 				.addFields(
 					{ name: 'Room ID', value: `${json[0].RoomId}`, inline: true },
-					{ name: 'Doom Room?', value: `${json[0].IsDorm}`, inline: true },
 					{ name: 'Max Players', value: `${json[0].MaxPlayers}`, inline: true },
 					{ name: 'Room Owner', value: `[${roomowner}](https://rec.net/user/${roomowner})`, inline: true },
+					{ name: 'Cheers', value: `${json[0].Stats.CheerCount}`, inline: true },
+					{ name: 'Favorites', value: `${json[0].Stats.FavoriteCount}`, inline: true },
+					{ name: 'Total Visits', value: `${json[0].Stats.VisitCount}`, inline: true },
 				)
 			interaction.editReply({ embeds: [embed] });
 		} catch(e) {
