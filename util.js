@@ -3,7 +3,6 @@ const fetch = require('node-fetch');
 /***
  * @param {int} id The Player's ID
  */
-
 async function getPlayerNameFromID(id) {
     try{
         const response = await fetch(`https://accounts.rec.net/account/${id}`);
@@ -21,7 +20,6 @@ async function getPlayerNameFromID(id) {
 /***
  * @param {int} id The room ID
  */
-
 async function getRoomNameFromID(id) {
     try{
         const response = await fetch(`https://rooms.rec.net/rooms/bulk?Id=${id}`);
