@@ -1,8 +1,12 @@
+<div align="center">
+<img src="./readme/logo.png" alt="A blurple Rec Room logo.">
+</div>
+
 # RecInfo
 
-A discord bot written in discord.js to interface with RecNet.
+A Discord bot that shows User, Room, and Image info from rec.net! *Not affiliated with Rec Room Inc.*
 
-[Invite the bot!](https://discord.com/api/oauth2/authorize?client_id=519559308980256771&permissions=18432&scope=bot)
+[Invite the bot here!](https://discord.com/api/oauth2/authorize?client_id=519559308980256771&permissions=18432&scope=bot)
 
 ## Features
 
