@@ -87,8 +87,8 @@ module.exports = {
 				.addFields(
 					{ name: 'Taken by', value: `[${uname}](https://rec.net/user/${uname})`, inline: true },
 					{ name: 'Room', value: room, inline: true },
-					{ name: 'Cheers', value: `${json.CheerCount}`, inline: true },
-					{ name: 'Comments', value: `${json.CommentCount}`, inline: true },
+					{ name: 'Cheers', value: `${json.CheerCount.toLocaleString("en-US")}`, inline: true },
+					{ name: 'Comments', value: `${json.CommentCount.toLocaleString("en-US")}`, inline: true },
 			)
 			interaction.editReply({ embeds: [embed] });
 		} catch(e) {
