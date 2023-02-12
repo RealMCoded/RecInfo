@@ -2,14 +2,6 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fetch = require('node-fetch');
 const { getPlayerNameFromID, getRoomNameFromID } = require("../util.js")
 
-//TODO: IMAGE ID GETTING
-
-/*
-	Make a POST request to https://api.rec.net/api/images/v3/bulk
-
-	Ids%5B%5D=YOUR_ID_HERE
-*/
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('get-image')
