@@ -1,6 +1,6 @@
 {
   "name": "recinfo",
-  "description": "A discord bot written in discord.js to interface with RecNet.",
+  "description": "A Discord bot that shows User, Room, and Image info from rec.net",
   "version": "0.1.0",
   "main": "index.js",
   "devDependencies": {},
