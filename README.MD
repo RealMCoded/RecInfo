@@ -1,8 +1,8 @@
 <div align="center">
-<img src="./readme/logo.png" alt="A blurple Rec Room logo.">
-</div>
+<img src="./readme/logo.png" alt="A blurple Rec Room logo." width="256" height="256">
 
 # RecInfo
+</div>
 
 A Discord bot that shows User, Room, and Image info from rec.net! *Not affiliated with Rec Room Inc.*
 
