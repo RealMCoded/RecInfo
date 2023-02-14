@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fetch = require('node-fetch');
-const { getPlayerNameFromID, getRoomNameFromID } = require("../util.js")
+const { getPlayerNameFromID, getRoomNameFromID, getPlayerIDFromName } = require("../util.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -15,17 +15,17 @@ module.exports = {
 			.setName("by-player")
 			.setDescription("Get images taken by a single player!")
 			.addStringOption(string =>
-				string.setName("id")
+				string.setName("username")
 					.setRequired(true)
-					.setDescription("The players ID")))
+					.setDescription("The players username")))
 		.addSubcommand(subcommand =>
 			subcommand
 			.setName("of-player")
 			.setDescription("Get images taken of a single player!")
 			.addStringOption(string =>
-				string.setName("id")
+				string.setName("username")
 					.setRequired(true)
-					.setDescription("The players ID")))
+					.setDescription("The players username")))
 		.addSubcommand(subcommand =>
 			subcommand
 			.setName("id")
@@ -50,14 +50,15 @@ module.exports = {
 					header = "Top image of rec.net"
 				} break;
 				case "by-player": {
-					const response = await fetch(`https://api.rec.net/api/images/v4/player/${interaction.options.getString("id")}`)
+					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
+					const response = await fetch(`https://api.rec.net/api/images/v4/player/${playerID}`)
 					json = await response.json();
 					json = json[0]
-					playerID = json.PlayerId
 					header = `Newest image created by ${await getPlayerNameFromID(playerID)}`
 				} break;
 				case "of-player": {
-					const response = await fetch(`https://api.rec.net/api/images/v3/feed/player/${interaction.options.getString("id")}`)
+					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
+					const response = await fetch(`https://api.rec.net/api/images/v3/feed/player/${playerID}`)
 					json = await response.json();
 					json = json[0]
 					playerID = json.PlayerId

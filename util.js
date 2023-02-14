@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 /***
- * @param {int} id The Player's ID
+ * @param {int} id The Players ID
  */
 async function getPlayerNameFromID(id) {
     try{
@@ -11,6 +11,23 @@ async function getPlayerNameFromID(id) {
         if (json.errors) throw json.errors;
 
         return json.username;
+    } catch(e) {
+        console.error(e)
+        return "*(unknown)*";
+    }
+}
+
+/***
+ * @param {string} name The Players name
+ */
+async function getPlayerIDFromName(name) {
+    try{
+        const response = await fetch(`https://accounts.rec.net/account?username=${name}`);
+        const json = await response.json();
+
+        if (json.errors) throw json.errors;
+
+        return json.accountId;
     } catch(e) {
         console.error(e)
         return "*(unknown)*";
@@ -36,4 +53,4 @@ async function getRoomNameFromID(id) {
 }
 
 //Export functions for use
-module.exports = { getPlayerNameFromID, getRoomNameFromID }
+module.exports = { getPlayerIDFromName, getPlayerNameFromID, getRoomNameFromID }
