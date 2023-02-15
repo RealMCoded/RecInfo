@@ -46,6 +46,8 @@ module.exports = {
 			const response2 = await fetch(`https://accounts.rec.net/account/${json.accountId}/bio`)
 			const jsonbio = await response2.json();
 
+			const joinDate = Math.round(Date.parse(json.createdAt)/1000)
+
 			const embed = new EmbedBuilder()
 				.setTitle(`${json.displayName} ${json.displayEmoji ?? ""} (@${json.username}) - \`${json.accountId}\``)
 				.setURL(`https://rec.net/user/${json.username}`)
@@ -64,6 +66,7 @@ module.exports = {
 					{ name: 'Platforms', value: `${json.platforms}`, inline: true },
 					{ name: 'Pronouns', value: `${json.personalPronouns}`, inline: true },
 					{ name: 'Identity Flags', value: `${json.identityFlags}`, inline: true },
+					{ name: 'Joined', value: `<t:${joinDate}:f> (<t:${joinDate}:R>)`, inline: true },
 				)
 			interaction.editReply({ embeds: [embed] });
 		} catch(e) {
