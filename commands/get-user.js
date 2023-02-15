@@ -47,10 +47,10 @@ module.exports = {
 			const jsonbio = await response2.json();
 
 			const embed = new EmbedBuilder()
-				.setTitle(`${json.displayName} (@${json.username}) - \`${json.accountId}\``)
+				.setTitle(`${json.displayName} ${json.displayEmoji ?? ""} (@${json.username}) - \`${json.accountId}\``)
 				.setURL(`https://rec.net/user/${json.username}`)
 				.setThumbnail(`https://img.rec.net/${json.profileImage}?cropSquare=true&width=192&height=192`)
-				.setDescription(jsonbio.bio)
+				.setDescription(jsonbio.bio == "" ? null : jsonbio.bio )
 				.setColor(randomColor())
 				.addFields(
 					{ name: 'Account ID', value: `\`${json.accountId}\``, inline: true },
