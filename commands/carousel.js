@@ -30,38 +30,39 @@ module.exports = {
 		const cmd = interaction.options.getSubcommand()
 		await interaction.deferReply()
 
-		//Button builder
+		//Button builder for active buttons
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
 					.setCustomId('back')
-					.setLabel('prev')
+					.setLabel('⬅️')
 					.setStyle(ButtonStyle.Primary),
 				new ButtonBuilder()
 					.setCustomId('stop')
-					.setLabel('stop')
+					.setLabel('⏹️')
 					.setStyle(ButtonStyle.Danger),
 				new ButtonBuilder()
 					.setCustomId('next')
-					.setLabel('next')
+					.setLabel('➡️')
 					.setStyle(ButtonStyle.Primary),
 			);
-		
+
+		//Button builder - all disabled
 		const row_stopped = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
 					.setCustomId('back')
-					.setLabel('prev')
+					.setLabel('⬅️')
 					.setStyle(ButtonStyle.Primary)
 					.setDisabled(true),
 				new ButtonBuilder()
 					.setCustomId('stop')
-					.setLabel('stop')
+					.setLabel('⏹️')
 					.setStyle(ButtonStyle.Danger)
 					.setDisabled(true),
 				new ButtonBuilder()
 					.setCustomId('next')
-					.setLabel('next')
+					.setLabel('➡️')
 					.setStyle(ButtonStyle.Primary)
 					.setDisabled(true),
 			);
@@ -108,15 +109,15 @@ module.exports = {
 			)
 			interaction.editReply({ embeds: [embed], components: [row], fetchReply: true });
 
-			const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
+			const collector = interaction.channel.createMessageComponentCollector({ time: 60000 });
 
 			collector.on('collect', async i => {
 				if (i.user.id === interaction.user.id) {
 					//await i.deferUpdate();
 					switch (i.customId) {
-						case "back": arrayPosition = arrayPosition-1; break;
-						case "next": arrayPosition = arrayPosition+1; break;
-						case "stop": i.update({ components: [row_stopped] }); return collector.stop(); break;
+						case "back": {if (arrayPosition > 0) arrayPosition-- } break;
+						case "next": {if (arrayPosition < 62) arrayPosition++ } break;
+						case "stop": i.update({ components: [] }); return collector.stop(); break;
 					}
 					json = await getImage(arrayPosition)
 
@@ -159,17 +160,17 @@ module.exports = {
 				case "top": {
 					_json = _json[arrayPos]
 					playerID = _json.PlayerId
-					header = "Top image of rec.net"
+					header = `Top image of rec.net #${arrayPos+1}`
 				} break;
 				case "by-player": {
 					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
 					_json = _json[arrayPos]
-					header = `Newest image created by ${await getPlayerNameFromID(playerID)}`
+					header = `Newest image created by ${await getPlayerNameFromID(playerID)} #${arrayPos+1}`
 				} break;
 				case "of-player": {
 					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
 					_json = _json[arrayPos]
-					header = `Newest image containing ${await getPlayerNameFromID(playerID)}`
+					header = `Newest image containing ${await getPlayerNameFromID(playerID)} #${arrayPos+1}`
 				} break;
 			}
 
