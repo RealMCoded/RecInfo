@@ -46,6 +46,25 @@ module.exports = {
 					.setLabel('next')
 					.setStyle(ButtonStyle.Primary),
 			);
+		
+		const row_stopped = new ActionRowBuilder()
+			.addComponents(
+				new ButtonBuilder()
+					.setCustomId('back')
+					.setLabel('prev')
+					.setStyle(ButtonStyle.Primary)
+					.setDisabled(true),
+				new ButtonBuilder()
+					.setCustomId('stop')
+					.setLabel('stop')
+					.setStyle(ButtonStyle.Danger)
+					.setDisabled(true),
+				new ButtonBuilder()
+					.setCustomId('next')
+					.setLabel('next')
+					.setStyle(ButtonStyle.Primary)
+					.setDisabled(true),
+			);
 
 		let header, json, playerID, response;
 
@@ -92,30 +111,39 @@ module.exports = {
 			const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
 
 			collector.on('collect', async i => {
-				arrayPosition++
-				json = await getImage(arrayPosition)
+				if (i.user.id === interaction.user.id) {
+					//await i.deferUpdate();
+					switch (i.customId) {
+						case "back": arrayPosition = arrayPosition-1; break;
+						case "next": arrayPosition = arrayPosition+1; break;
+						case "stop": i.update({ components: [row_stopped] }); return collector.stop(); break;
+					}
+					json = await getImage(arrayPosition)
 
-				let uname = await getPlayerNameFromID(playerID)
-				let room = await getRoomNameFromID(json.RoomId)
+					let uname = await getPlayerNameFromID(playerID)
+					let room = await getRoomNameFromID(json.RoomId)
 
-				if (room == null) {room = "*(unknown)*"} else {room = `[${room}](https://rec.net/room/${room})`}
+					if (room == null) {room = "*(unknown)*"} else {room = `[${room}](https://rec.net/room/${room})`}
 
-				const embed = new EmbedBuilder()
-					.setTitle(`${header} - \`${json.Id}\``)
-					.setURL(`https://rec.net/image/${json.Id}`)
-					.setImage(`https://img.rec.net/${json.ImageName}`)
-					.setDescription(`*\"${json.Description ?? "( no description provided )"}\"*`)
-					.setColor(randomColor())
-					.addFields(
-						{ name: 'Taken by', value: `[${uname}](https://rec.net/user/${uname})`, inline: true },
-						{ name: 'Room', value: room, inline: true },
-						{ name: 'Cheers', value: `${json.CheerCount.toLocaleString("en-US")}`, inline: true },
-						{ name: 'Comments', value: `${json.CommentCount.toLocaleString("en-US")}`, inline: true },
-				)
-				await i.update({ embeds: [embed], components: [row], fetchReply: true });
+					const embed = new EmbedBuilder()
+						.setTitle(`${header} - \`${json.Id}\``)
+						.setURL(`https://rec.net/image/${json.Id}`)
+						.setImage(`https://img.rec.net/${json.ImageName}`)
+						.setDescription(`*\"${json.Description ?? "( no description provided )"}\"*`)
+						.setColor(randomColor())
+						.addFields(
+							{ name: 'Taken by', value: `[${uname}](https://rec.net/user/${uname})`, inline: true },
+							{ name: 'Room', value: room, inline: true },
+							{ name: 'Cheers', value: `${json.CheerCount.toLocaleString("en-US")}`, inline: true },
+							{ name: 'Comments', value: `${json.CommentCount.toLocaleString("en-US")}`, inline: true },
+					)
+					await i.update({ embeds: [embed], components: [row], fetchReply: true });
+				}
 			});
 			
-			collector.on('end', async collected => console.log(`Collected ${collected.size} items`));
+			collector.on('end', async collected => {
+				interaction.editReply({ components: [row_stopped] });
+			});
 		} catch(e) {
 			console.log(e)
 			interaction.editReply("❌ **There was an error with your request.\n\nEither the requested image is invalid, or there's an internal issue.**"); 
