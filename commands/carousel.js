@@ -47,11 +47,27 @@ module.exports = {
 					.setStyle(ButtonStyle.Primary),
 			);
 
-		let header, json, playerID;
+		let header, json, playerID, response;
 
 		let arrayPosition = 0;
 
 		try {
+			switch(cmd) {
+				case "top": {
+					response = await fetch(`https://api.rec.net/api/images/v3/feed/global`)
+				} break;
+				case "by-player": {
+					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
+					response = await fetch(`https://api.rec.net/api/images/v4/player/${playerID}`)
+				} break;
+				case "of-player": {
+					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
+					response = await fetch(`https://api.rec.net/api/images/v3/feed/player/${playerID}`)
+				} break;
+			}
+
+			response = await response.json();
+
 			json = await getImage(arrayPosition)
 
 			let uname = await getPlayerNameFromID(playerID)
@@ -99,7 +115,7 @@ module.exports = {
 				await i.update({ embeds: [embed], components: [row], fetchReply: true });
 			});
 			
-			collector.on('end', collected => console.log(`Collected ${collected.size} items`));
+			collector.on('end', async collected => console.log(`Collected ${collected.size} items`));
 		} catch(e) {
 			console.log(e)
 			interaction.editReply("❌ **There was an error with your request.\n\nEither the requested image is invalid, or there's an internal issue.**"); 
@@ -110,28 +126,21 @@ module.exports = {
 		 * @param {int} arrayPos Array position
 		 */
 		async function getImage(arrayPos){
-			var _json;
+			var _json = response
 			switch(cmd) {
 				case "top": {
-					const response = await fetch(`https://api.rec.net/api/images/v3/feed/global`)
-					_json = await response.json();
 					_json = _json[arrayPos]
 					playerID = _json.PlayerId
 					header = "Top image of rec.net"
 				} break;
 				case "by-player": {
 					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
-					const response = await fetch(`https://api.rec.net/api/images/v4/player/${playerID}`)
-					_json = await response.json();
 					_json = _json[arrayPos]
 					header = `Newest image created by ${await getPlayerNameFromID(playerID)}`
 				} break;
 				case "of-player": {
 					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
-					const response = await fetch(`https://api.rec.net/api/images/v3/feed/player/${playerID}`)
-					_json = await response.json();
 					_json = _json[arrayPos]
-					playerID = _json.PlayerId
 					header = `Newest image containing ${await getPlayerNameFromID(playerID)}`
 				} break;
 			}
