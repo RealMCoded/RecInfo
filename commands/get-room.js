@@ -45,7 +45,7 @@ module.exports = {
 			const roomowner = await getPlayerNameFromID(json[0].CreatorAccountId)
 
 			const embed = new EmbedBuilder()
-				.setTitle(`^${json[0].Name} - ${json[0].RoomId}`)
+				.setTitle(`^${json[0].Name} - \`${json[0].RoomId}\``)
 				.setURL(`https://rec.net/room/${json[0].Name}`)
 				.setImage(`https://img.rec.net/${json[0].ImageName}`)
 				.setDescription(json[0].Description)

@@ -81,7 +81,7 @@ module.exports = {
 			if (room == null) {room = "*(unknown)*"} else {room = `[${room}](https://rec.net/room/${room})`}
 
 			const embed = new EmbedBuilder()
-				.setTitle(`${header} - ${json.Id}`)
+				.setTitle(`${header} - \`${json.Id}\``)
 				.setURL(`https://rec.net/image/${json.Id}`)
 				.setImage(`https://img.rec.net/${json.ImageName}`)
 				.setDescription(`*\"${json.Description ?? "( no description provided )"}\"*`)
