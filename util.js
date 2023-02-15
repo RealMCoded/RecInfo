@@ -52,6 +52,22 @@ async function getRoomNameFromID(id) {
     }
 }
 
+/***
+ * @param {int} flags Identity flags
+ */
+async function decodeFlags(flags) {
+    //soon
+    return flags;
+}
+
+/***
+ * @param {int} flags Pronoun flags
+ */
+async function decodePronouns(flags) {
+    //soon
+    return flags;
+}
+
 function randomColor(){
     return Math.floor(Math.random()*16777215).toString(16);
 }
