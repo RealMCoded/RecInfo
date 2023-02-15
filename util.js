@@ -52,5 +52,9 @@ async function getRoomNameFromID(id) {
     }
 }
 
+function randomColor(){
+    return Math.floor(Math.random()*16777215).toString(16);
+}
+
 //Export functions for use
-module.exports = { getPlayerIDFromName, getPlayerNameFromID, getRoomNameFromID }
+module.exports = { getPlayerIDFromName, getPlayerNameFromID, getRoomNameFromID, randomColor }

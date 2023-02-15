@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { randomColor } = require("../util.js")
 const fetch = require('node-fetch');
 
 module.exports = {
@@ -50,6 +51,7 @@ module.exports = {
 				.setURL(`https://rec.net/user/${json.username}`)
 				.setThumbnail(`https://img.rec.net/${json.profileImage}?cropSquare=true&width=192&height=192`)
 				.setDescription(jsonbio.bio)
+				.setColor(randomColor())
 				.addFields(
 					{ name: 'Account ID', value: `\`${json.accountId}\``, inline: true },
 					{ name: 'Username', value: `${json.username}`, inline: true },

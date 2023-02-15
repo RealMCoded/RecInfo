@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fetch = require('node-fetch');
-const { getPlayerNameFromID, getRoomNameFromID, getPlayerIDFromName } = require("../util.js")
+const { getPlayerNameFromID, getRoomNameFromID, getPlayerIDFromName, randomColor } = require("../util.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -85,6 +85,7 @@ module.exports = {
 				.setURL(`https://rec.net/image/${json.Id}`)
 				.setImage(`https://img.rec.net/${json.ImageName}`)
 				.setDescription(`*\"${json.Description ?? "( no description provided )"}\"*`)
+				.setColor(randomColor())
 				.addFields(
 					{ name: 'Taken by', value: `[${uname}](https://rec.net/user/${uname})`, inline: true },
 					{ name: 'Room', value: room, inline: true },

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const project = require('../package.json')
+const { randomColor } = require("../util.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
