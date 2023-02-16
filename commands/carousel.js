@@ -159,6 +159,8 @@ module.exports = {
 							{ name: 'Comments', value: `${json.CommentCount.toLocaleString("en-US")}`, inline: true },
 					)
 					await i.update({ embeds: [embed], components: [row] });
+				} else {
+					await  i.reply({content: "❌ **This isn't your carousel!**\n\nYou can make your own with </image-carousel top:1075581781841018960>, </image-carousel by-player:1075581781841018960>, or </image-carousel of-player:1075581781841018960>.", ephemeral: true})
 				}
 			});
 			
