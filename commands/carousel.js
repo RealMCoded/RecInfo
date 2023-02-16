@@ -42,6 +42,11 @@ module.exports = {
 					.setLabel('◀️')
 					.setStyle(ButtonStyle.Primary),
 				new ButtonBuilder()
+					.setCustomId('blankSpacer')
+					.setLabel('---')
+					.setStyle(ButtonStyle.Secondary)
+					.setDisabled(true),
+				new ButtonBuilder()
 					.setCustomId('next')
 					.setLabel('▶️')
 					.setStyle(ButtonStyle.Primary),
@@ -63,6 +68,11 @@ module.exports = {
 					.setCustomId('back')
 					.setLabel('◀️')
 					.setStyle(ButtonStyle.Primary)
+					.setDisabled(true),
+				new ButtonBuilder()
+					.setCustomId('blankSpacer')
+					.setLabel('---')
+					.setStyle(ButtonStyle.Secondary)
 					.setDisabled(true),
 				new ButtonBuilder()
 					.setCustomId('next')
