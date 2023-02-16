@@ -14,7 +14,9 @@ A Discord bot that shows User, Room, and Image info from rec.net! *Not affiliate
 
 - Get room info!
 
-- Show images from rec.net!
+- Get images from rec.net!
+
+- Show images in a fancy carousel!
 
 ## Screenshots
 
@@ -23,6 +25,8 @@ A Discord bot that shows User, Room, and Image info from rec.net! *Not affiliate
 ![](./readme/1.png)
 
 ![](./readme/2.png)
+
+![](./readme/3.png)
 
 ## Building
 
