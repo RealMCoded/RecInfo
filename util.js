@@ -56,7 +56,7 @@ async function getRoomNameFromID(id) {
  * @param {int} flags Identity flags
  */
 async function decodeFlags(flags) {
-    //soon
+    //TODO: Figure out how to decode this!
     return flags;
 }
 
@@ -64,7 +64,8 @@ async function decodeFlags(flags) {
  * @param {int} flags Pronoun flags
  */
 async function decodePronouns(flags) {
-    //soon
+    //TODO: Figure out how to decode this!
+    
     return flags;
 }
 
