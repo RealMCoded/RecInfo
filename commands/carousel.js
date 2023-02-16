@@ -34,16 +34,20 @@ module.exports = {
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
-					.setCustomId('back')
-					.setLabel('⬅️')
+					.setCustomId('skipToStart')
+					.setLabel('⏪')
 					.setStyle(ButtonStyle.Primary),
 				new ButtonBuilder()
-					.setCustomId('stop')
-					.setLabel('⏹️')
-					.setStyle(ButtonStyle.Danger),
+					.setCustomId('back')
+					.setLabel('◀️')
+					.setStyle(ButtonStyle.Primary),
 				new ButtonBuilder()
 					.setCustomId('next')
-					.setLabel('➡️')
+					.setLabel('▶️')
+					.setStyle(ButtonStyle.Primary),
+				new ButtonBuilder()
+					.setCustomId('skipToEnd')
+					.setLabel('⏩')
 					.setStyle(ButtonStyle.Primary),
 			);
 
@@ -51,18 +55,23 @@ module.exports = {
 		const row_stopped = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
-					.setCustomId('back')
-					.setLabel('⬅️')
+					.setCustomId('skipToStart')
+					.setLabel('⏪')
 					.setStyle(ButtonStyle.Primary)
 					.setDisabled(true),
 				new ButtonBuilder()
-					.setCustomId('stop')
-					.setLabel('⏹️')
-					.setStyle(ButtonStyle.Danger)
+					.setCustomId('back')
+					.setLabel('◀️')
+					.setStyle(ButtonStyle.Primary)
 					.setDisabled(true),
 				new ButtonBuilder()
 					.setCustomId('next')
-					.setLabel('➡️')
+					.setLabel('▶️')
+					.setStyle(ButtonStyle.Primary)
+					.setDisabled(true),
+				new ButtonBuilder()
+					.setCustomId('skipToEnd')
+					.setLabel('⏩')
 					.setStyle(ButtonStyle.Primary)
 					.setDisabled(true),
 			);
@@ -113,12 +122,13 @@ module.exports = {
 
 			collector.on('collect', async i => {
 				if (i.user.id === interaction.user.id) {
-					//await i.deferUpdate();
 					switch (i.customId) {
 						case "back": {if (arrayPosition > 0) arrayPosition-- } break;
 						case "next": {if (arrayPosition < 62) arrayPosition++ } break;
-						case "stop": i.update({ components: [] }); return collector.stop(); break;
+						case "skipToStart": {arrayPosition = 0 } break;
+						case "skipToEnd": {arrayPosition = 63} break;
 					}
+
 					json = await getImage(arrayPosition)
 
 					let uname = await getPlayerNameFromID(playerID)
@@ -138,12 +148,12 @@ module.exports = {
 							{ name: 'Cheers', value: `${json.CheerCount.toLocaleString("en-US")}`, inline: true },
 							{ name: 'Comments', value: `${json.CommentCount.toLocaleString("en-US")}`, inline: true },
 					)
-					await i.update({ embeds: [embed], components: [row], fetchReply: true });
+					await i.update({ embeds: [embed], components: [row] });
 				}
 			});
 			
 			collector.on('end', async collected => {
-				interaction.editReply({ components: [row_stopped] });
+				return await interaction.editReply({ components: [row_stopped] });
 			});
 		} catch(e) {
 			console.log(e)
