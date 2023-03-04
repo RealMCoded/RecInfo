@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { randomColor } = require("../util.js")
+const { randomColor, random } = require("../util.js")
 const fetch = require('node-fetch');
 
 module.exports = {
@@ -14,6 +14,10 @@ module.exports = {
 				string.setName("id")
 					.setRequired(true)
 					.setDescription("the ID of the user")))
+		.addSubcommand(subcommand =>
+			subcommand
+			.setName("random")
+			.setDescription("Get a random Rec Room user"))
 		.addSubcommand(subcommand =>
 			subcommand
 			.setName("username")
@@ -32,6 +36,8 @@ module.exports = {
 			id = `/${interaction.options.getString("id")}`
 		} else if(cmd == "username"){
 			id = `?username=${interaction.options.getString("username")}`
+		} else if(cmd == "random"){
+			id = `/${random(59920933)}` //A user from March 23, 2022 5:58 PM. TODO: Find a way to get the newest rec room user!
 		}
 
 		try {

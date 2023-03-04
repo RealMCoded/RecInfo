@@ -73,5 +73,12 @@ function randomColor(){
     return Math.floor(Math.random()*16777215).toString(16);
 }
 
+/***
+ * @param {int} number Max number
+ */
+function random(number) {
+    return Math.floor(Math.random() * number)
+}
+
 //Export functions for use
-module.exports = { getPlayerIDFromName, getPlayerNameFromID, getRoomNameFromID, randomColor }
+module.exports = { getPlayerIDFromName, getPlayerNameFromID, getRoomNameFromID, randomColor, random }
