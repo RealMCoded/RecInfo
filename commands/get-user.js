@@ -37,7 +37,7 @@ module.exports = {
 		} else if(cmd == "username"){
 			id = `?username=${interaction.options.getString("username")}`
 		} else if(cmd == "random"){
-			id = `/${random(59920933)}` //A user from March 23, 2022 5:58 PM. TODO: Find a way to get the newest rec room user!
+			id = `/${random(1903833159)}` //A user from March 29, 2023 3:43 PM. TODO: Find a way to get the newest rec room user!
 		}
 
 		try {
