@@ -41,7 +41,7 @@ module.exports = {
 		}
 
 		try {
-			const response = await fetch(`https://accounts.rec.net/account${id}`)
+			const response = await fetch(`https://apim.rec.net/accounts/account${id}`)
 			const json = await response.json();
 
 			if (json.errors) {
@@ -49,7 +49,7 @@ module.exports = {
 				return;
 			}
 
-			const response2 = await fetch(`https://accounts.rec.net/account/${json.accountId}/bio`)
+			const response2 = await fetch(`https://apim.rec.net/accounts/account/${json.accountId}/bio`)
 			const jsonbio = await response2.json();
 
 			const joinDate = Math.round(Date.parse(json.createdAt)/1000)

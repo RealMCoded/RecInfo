@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
  */
 async function getPlayerNameFromID(id) {
     try{
-        const response = await fetch(`https://accounts.rec.net/account/${id}`);
+        const response = await fetch(`https://apim.rec.net/accounts/account/${id}`);
         const json = await response.json();
 
         if (json.errors) throw json.errors;
@@ -22,7 +22,7 @@ async function getPlayerNameFromID(id) {
  */
 async function getPlayerIDFromName(name) {
     try{
-        const response = await fetch(`https://accounts.rec.net/account?username=${name}`);
+        const response = await fetch(`https://apim.rec.net/accounts/account?username=${name}`);
         const json = await response.json();
 
         if (json.errors) throw json.errors;
