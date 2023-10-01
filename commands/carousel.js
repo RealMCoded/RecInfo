@@ -93,15 +93,15 @@ module.exports = {
 		try {
 			switch(cmd) {
 				case "top": {
-					response = await fetch(`https://api.rec.net/api/images/v3/feed/global`)
+					response = await fetch(`https://apim.rec.net/apis/api/images/v3/feed/global`)
 				} break;
 				case "by-player": {
 					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
-					response = await fetch(`https://api.rec.net/api/images/v4/player/${playerID}`)
+					response = await fetch(`https://apim.rec.net/apis/api/images/v4/player/${playerID}`)
 				} break;
 				case "of-player": {
 					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
-					response = await fetch(`https://api.rec.net/api/images/v3/feed/player/${playerID}`)
+					response = await fetch(`https://apim.rec.net/apis/api/images/v3/feed/player/${playerID}`)
 				} break;
 			}
 

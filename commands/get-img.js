@@ -43,7 +43,7 @@ module.exports = {
 		try {
 			switch(cmd) {
 				case "top": {
-					const response = await fetch(`https://api.rec.net/api/images/v3/feed/global`)
+					const response = await fetch(`https://apim.rec.net/apis/api/images/v3/feed/global`)
 					json = await response.json();
 					json = json[0]
 					playerID = json.PlayerId
@@ -51,14 +51,14 @@ module.exports = {
 				} break;
 				case "by-player": {
 					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
-					const response = await fetch(`https://api.rec.net/api/images/v4/player/${playerID}`)
+					const response = await fetch(`https://apim.rec.net/apis/api/images/v4/player/${playerID}`)
 					json = await response.json();
 					json = json[0]
 					header = `Newest image created by ${await getPlayerNameFromID(playerID)}`
 				} break;
 				case "of-player": {
 					playerID = await getPlayerIDFromName(interaction.options.getString("username"))
-					const response = await fetch(`https://api.rec.net/api/images/v3/feed/player/${playerID}`)
+					const response = await fetch(`https://apim.rec.net/apis/api/images/v3/feed/player/${playerID}`)
 					json = await response.json();
 					json = json[0]
 					var __playerID = playerID
