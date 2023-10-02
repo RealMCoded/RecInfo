@@ -9,7 +9,7 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 			.setName("id")
-			.setDescription("Get a Rec Room from its ID")
+			.setDescription("Get a room from its ID")
 			.addStringOption(string =>
 				string.setName("id")
 					.setRequired(true)
@@ -17,7 +17,7 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 			.setName("name")
-			.setDescription("Get a Rec Room from its name")
+			.setDescription("Get a room from its name")
 			.addStringOption(string =>
 				string.setName("name")
 					.setRequired(true)
