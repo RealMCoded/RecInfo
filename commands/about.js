@@ -13,7 +13,7 @@ module.exports = {
 
 		const embed = new EmbedBuilder()
 			.setTitle(`About RecInfo`)
-			.setColor(randomColor())
+			.setColor(0x0099FF)
 			.setDescription(`Version ${project.version} ([commit \`${revision}\`](https://github.com/RealMCoded/RecInfo/commit/${revision}))\n\nBot created by [stuartt](https://discord.com/users/284804878604435476 "My Discord Profile") // [@stuartt (RecNet)](https://rec.net/user/stuartt "My rec.net")`)
 		interaction.reply({ embeds: [embed] });
 	},

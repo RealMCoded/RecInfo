@@ -59,7 +59,7 @@ module.exports = {
 				.setURL(`https://rec.net/user/${json.username}`)
 				.setThumbnail(`https://img.rec.net/${json.profileImage}?cropSquare=true&width=192&height=192`)
 				.setDescription(jsonbio.bio == "" ? null : jsonbio.bio )
-				.setColor(randomColor())
+				.setColor(0x0099FF)
 				.addFields(
 					{ name: 'Account ID', value: `\`${json.accountId}\``, inline: true },
 					{ name: 'Username', value: `${json.username}`, inline: true },

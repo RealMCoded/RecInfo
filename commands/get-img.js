@@ -86,7 +86,7 @@ module.exports = {
 				.setURL(`https://rec.net/image/${json.Id}`)
 				.setImage(`https://img.rec.net/${json.ImageName}`)
 				.setDescription(`*\"${json.Description ?? "( no description provided )"}\"*`)
-				.setColor(randomColor())
+				.setColor(0x0099FF)
 				.addFields(
 					{ name: 'Taken by', value: `[${uname}](https://rec.net/user/${uname})`, inline: true },
 					{ name: 'Room', value: room, inline: true },

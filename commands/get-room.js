@@ -49,7 +49,7 @@ module.exports = {
 				.setURL(`https://rec.net/room/${json[0].Name}`)
 				.setImage(`https://img.rec.net/${json[0].ImageName}`)
 				.setDescription(json[0].Description)
-				.setColor(randomColor())
+				.setColor(0x0099FF)
 				.addFields(
 					{ name: 'Room ID', value: `\`${json[0].RoomId}\``, inline: true },
 					{ name: 'Max Players', value: `${json[0].MaxPlayers}`, inline: true },
