@@ -28,7 +28,6 @@ module.exports = {
 					.setDescription("The players username"))),
 	async execute(interaction) {
 		const cmd = interaction.options.getSubcommand()
-		await interaction.deferReply()
 
 		//Button builder for active buttons
 		const row = new ActionRowBuilder()
@@ -119,20 +118,20 @@ module.exports = {
 				.setURL(`https://rec.net/image/${json.Id}`)
 				.setImage(`https://img.rec.net/${json.ImageName}`)
 				.setDescription(`*\"${json.Description ?? "( no description provided )"}\"*`)
-				.setColor(randomColor())
+				.setColor(0x0099FF)
 				.addFields(
 					{ name: 'Taken by', value: `[${uname}](https://rec.net/user/${uname})`, inline: true },
 					{ name: 'Room', value: room, inline: true },
 					{ name: 'Cheers', value: `${json.CheerCount.toLocaleString("en-US")}`, inline: true },
 					{ name: 'Comments', value: `${json.CommentCount.toLocaleString("en-US")}`, inline: true },
 			)
-			interaction.editReply({ embeds: [embed], components: [row], fetchReply: true });
+			const message = await interaction.reply({ embeds: [embed], components: [row], fetchReply: true });
 
-			const collector = interaction.channel.createMessageComponentCollector({ time: 60000 });
+			const collector = message.createMessageComponentCollector({ time: 60000 });
 
 			collector.on('collect', async i => {
 				if (i.user.id === interaction.user.id) {
-					switch (i.customId) {
+					switch (i.component.customId) {
 						case "back": {if (arrayPosition > 0) arrayPosition-- } break;
 						case "next": {if (arrayPosition < 62) arrayPosition++ } break;
 						case "skipToStart": {arrayPosition = 0 } break;
@@ -151,7 +150,7 @@ module.exports = {
 						.setURL(`https://rec.net/image/${json.Id}`)
 						.setImage(`https://img.rec.net/${json.ImageName}`)
 						.setDescription(`*\"${json.Description ?? "( no description provided )"}\"*`)
-						.setColor(randomColor())
+						.setColor(0x0099FF)
 						.addFields(
 							{ name: 'Taken by', value: `[${uname}](https://rec.net/user/${uname})`, inline: true },
 							{ name: 'Room', value: room, inline: true },
