@@ -1,3 +1,9 @@
+## This bot has been discontinued.
+
+You may self host the bot, or use [RecNetBot](https://discord.com/oauth2/authorize?client_id=788632031835324456)
+
+---
+
 <div align="center">
 <img src="./readme/logoText.png" alt="A blurple Rec Room logo." width="512" height="205">
 </div>
